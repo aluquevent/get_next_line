@@ -82,26 +82,3 @@ char	*get_next_line(int fd)
 	}
 	return (extract_line(&stack));
 }
-/*
-#include <stdio.h>
-int main(void)
-{
-	int		fd;
-	const char	*path = "text1.txt";
-	char		*line;
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-	{
-		printf("Error al abrir el archivo.\n");
-		return (1);
-	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s\n", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}
-*/

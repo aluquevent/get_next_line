@@ -10,24 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
 #include "get_next_line.h"
-
-int	main(void)
+#include <stdio.h>
+int main(void)
 {
-	int			i = 0;
-	int			fd;
+	int		fd;
 	const char	*path = "text1.txt";
-	char	*line;
+	char		*line;
+
 	fd = open(path, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
+	if (fd < 0)
 	{
-		printf("%d --> %s\n", i, line);
-		i++;
+		printf("Error al abrir el archivo.\n");
+		return (1);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s\n", line);
 		free(line);
 	}
 	close(fd);
 	return (0);
 }
+*/
