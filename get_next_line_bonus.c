@@ -93,18 +93,18 @@ char	*read_fd(int fd, char **stack)
 
 char	*get_next_line(int fd)
 {
-	static char	*stack;
+	static char	*stack[1024];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!stack)
-		stack = ft_strdup("");
-	stack = read_fd(fd, &stack);
-	if (!stack || *stack == '\0')
+	if (!stack[fd])
+		stack[fd] = ft_strdup("");
+	stack[fd] = read_fd(fd, &stack[fd]);
+	if (!stack[fd] || *stack[fd] == '\0')
 	{
-		free(stack);
-		stack = NULL;
+		free(stack[fd]);
+		stack[fd] = NULL;
 		return (NULL);
 	}
-	return (extract_line(&stack));
+	return (extract_line(&stack[fd]));
 }

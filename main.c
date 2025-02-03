@@ -10,25 +10,50 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 #include <stdio.h>
-int main(void)
-{
-	int		fd;
-	const char	*path = "text1.txt";
-	char		*line;
+#include "get_next_line.h"
 
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
+int	main(void)
+{
+	int			fd1, fd2, fd3;
+	const char	*path1 = "text1.txt";
+	const char	*path2 = "text2.txt";
+	const char	*path3 = "text3.txt";
+	char		*line1, *line2, *line3;
+
+	fd1 = open(path1, O_RDONLY);
+	fd2 = open(path2, O_RDONLY);
+	fd3 = open(path3, O_RDONLY);
+	if (fd1 < 0 || fd2 < 0 || fd3 < 0)
 	{
-		printf("Error al abrir el archivo.\n");
+		printf("Error al abrir los archivos.\n");
 		return (1);
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
-		printf("%s\n", line);
-		free(line);
+		line1 = get_next_line(fd1);
+		line2 = get_next_line(fd2);
+		line3 = get_next_line(fd3);
+		if (!line1 && !line2 && !line3)
+			break;
+		if (line1)
+		{
+			printf("Archivo 1: %s\n", line1);
+			free(line1);
+		}
+		if (line2)
+		{
+			printf("Archivo 2: %s\n", line2);
+			free(line2);
+		}
+		if (line3)
+		{
+			printf("Archivo 3: %s\n", line3);
+			free(line3);
+		}
 	}
-	close(fd);
+	close(fd1);
+	close(fd2);
+	close(fd3);
 	return (0);
 }
